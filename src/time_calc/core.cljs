@@ -1,11 +1,10 @@
 (ns time-calc.core
-  (:require [clojure.browser.repl :as repl]))
+  (:require [cljs.nodejs :as nodejs]))
 
-(enable-console-print!)
+(nodejs/enable-util-print!)
 
-(println "Hello Node World!")
+(defn -main [& args]
+  (println "Hello, Node.js World!"))
 
-;(def fs (js/require "fs"))
-;
-;(-> (.readFile fs "time.txt")
-;    (println))
+(set! *main-cli-fn* -main)
+
