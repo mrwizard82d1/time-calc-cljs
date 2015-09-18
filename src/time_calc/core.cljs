@@ -5,13 +5,22 @@
 
 (nodejs/enable-util-print!)
 
+(defn make-tasks [text] [])
+
+(defn summarize-tasks [tasks] {"mots" 3.75 "atrog" 4.25})
+
+(defn report-summary [summary] (doseq [[k v] (sort (map identity summary))]
+                                 (println k v)))
+
 (defn -main [& args]
-  (.readFile fs "time.txt" (fn [err data]
-                             (if err
-                               (throw err)
-                               (println (str data)))))
-  ;; Note that this next line executes FIRST.
-  (println "Hello, Node.js World! (Surprisingly prints first.)"))
+  (let [time-file-name (if args
+                         (first args)
+                         "time.txt")]
+    (.readFile fs time-file-name (fn [error text]
+                                   (if error
+                                     (throw error)
+                                     (-> text (make-tasks) (summarize-tasks) (report-summary)))))
+    (println "Hello, Node.js World! (Surprisingly prints first.)")))
 
 (set! *main-cli-fn* -main)
 

@@ -1,6 +1,7 @@
-(require '[cljs.build.api :as b])
+(require '[cljs.build.api])
 
-(b/watch "src"
-  {:main 'time-calc.core
-   :output-to "out/time_calc.js"
-   :output-dir "out"})
+(cljs.build.api/watch "src"
+                      {:main 'time-calc.core
+                       :output-to "out/time_calc.js"
+                       :output-dir "out"
+                       :target :nodejs})
