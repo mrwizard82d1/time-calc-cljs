@@ -10,6 +10,8 @@
 
 (def fs (js/require "fs"))
 
+(def sprintf (js/require "sprintf-js"))
+
 (nodejs/enable-util-print!)
 
 (defn line->task
@@ -93,13 +95,11 @@
     (into {} (for [[d i] interval-map]
                [d (interval->decimal-interval i)]))))
 
-;; (defn summarize-tasks [tasks] {"mots" 3.75 "atrog" 4.25})
-
 (defn report-summary [summary]
   "Reports the summary of tasks."
   (doseq [[details duration]
           (sort-by first summary)]
-    (println details (float duration))))
+    (println (.sprintf sprintf "%-12s %5.2f" details (float duration)))))
 
 (defn -main [& args]
   (let [time-file-name (if args
